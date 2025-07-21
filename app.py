@@ -50,7 +50,7 @@ def analyze_listings(listings, margin_pct):
     df['margin_pct'] = df['profit'] / df['price'] * 100
     return df[df['margin_pct'] >= margin_pct].sort_values(by='margin_pct', ascending=False)
 
-st.title(\"🔍 Analyseur d'Annonces Luxauto\")
+st.title("🔍 Analyseur d'Annonces Luxauto")
 
 make = st.sidebar.text_input(\"Marque\", \"Renault\")
 model = st.sidebar.text_input(\"Modèle\", \"Clio\")
