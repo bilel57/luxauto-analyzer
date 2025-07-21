@@ -50,15 +50,16 @@ def analyze_listings(listings, margin_pct):
     df['margin_pct'] = df['profit'] / df['price'] * 100
     return df[df['margin_pct'] >= margin_pct].sort_values(by='margin_pct', ascending=False)
 
+# Interface Streamlit
 st.title("🔍 Analyseur d'Annonces Luxauto")
 
-make = st.sidebar.text_input(\"Marque\", \"Renault\")
-model = st.sidebar.text_input(\"Modèle\", \"Clio\")
-pages = st.sidebar.slider(\"Nombre de pages à analyser\", 1, 10, 3)
-margin = st.sidebar.slider(\"Marge minimale (%)\", 0, 50, 10)
-delay = st.sidebar.slider(\"Délai entre les requêtes (s)\", 0.0, 5.0, 1.0)
+make = st.sidebar.text_input("Marque", "Renault")
+model = st.sidebar.text_input("Modèle", "Clio")
+pages = st.sidebar.slider("Nombre de pages à analyser", 1, 10, 3)
+margin = st.sidebar.slider("Marge minimale (%)", 0, 50, 10)
+delay = st.sidebar.slider("Délai entre les requêtes (s)", 0.0, 5.0, 1.0)
 
-if st.sidebar.button(\"Lancer l'analyse\"):
+if st.sidebar.button("Lancer l'analyse"):
 
     all_listings = []
     for page in range(1, pages + 1):
@@ -69,9 +70,9 @@ if st.sidebar.button(\"Lancer l'analyse\"):
     results = analyze_listings(all_listings, margin)
     
     if results.empty:
-        st.warning(\"Aucune opportunité rentable trouvée.\")
+        st.warning("Aucune opportunité rentable trouvée.")
     else:
-        st.success(f\"{len(results)} opportunités trouvées ! 📈\")
+        st.success(f"{len(results)} opportunités trouvées ! 📈")
         st.dataframe(results[['title', 'year', 'price', 'avg_price', 'margin_pct', 'link']])
         csv = results.to_csv(index=False).encode('utf-8')
-        st.download_button(\"📥 Télécharger en CSV\", csv, \"opportunites.csv\", \"text/csv\")
+        st.download_button("📥 Télécharger en CSV", csv, "opportunites.csv", "text/csv")
